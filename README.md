@@ -6,4 +6,4 @@
 
 ## Mockups
 
-- See mockups designs [here](https://dazt5.github.io/marketprojectwebapp/mocks/)
+- See mockups designs [here](https://github.com/Dazt5/marketprojectwebapp/blob/main/mocks/README.md)
