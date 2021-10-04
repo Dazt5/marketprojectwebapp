@@ -13,18 +13,18 @@
 - ## [Actualizar Cliente](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/ActualizarUsuario.html)
 
 ## Clientes
-- ## [Consultar Clientes](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/ConsultarClientes.html)
+- ## [Consultar Clientes](https://dazt5.github.io/marketprojectwebapp/mocks/clientes-mocks/ConsultarClientes.html)
 
-- ## [Registrar Cliente](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/RegistrarCliente.html)
+- ## [Registrar Cliente](https://dazt5.github.io/marketprojectwebapp/mocks/clientes-mocks/RegistrarCliente.html)
 
-- ## [Actualizar Cliente](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/ActualizarCliente.html)
+- ## [Actualizar Cliente](https://dazt5.github.io/marketprojectwebapp/mocks/clientes-mocks/ActualizarCliente.html)
 
 ## Proveedores
-- ## [Consultar Proveedores](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/ConsultarProveedores.html)
+- ## [Consultar Proveedores](https://dazt5.github.io/marketprojectwebapp/mocks/proveedores-mocks/ConsultarProveedores.html)
 
-- ## [Registrar Proveedor](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/RegistrarProveedor.html)
+- ## [Registrar Proveedor](https://dazt5.github.io/marketprojectwebapp/mocks/proveedores-mocks/RegistrarProveedor.html)
 
-- ## [Actualizar Proveedor](https://dazt5.github.io/marketprojectwebapp/mocks/usuarios-mocks/ActualizarProveedor.html)
+- ## [Actualizar Proveedor](https://dazt5.github.io/marketprojectwebapp/mocks/proveedores-mocks/ActualizarProveedor.html)
 
 
 ## Productos
