@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de usuarios</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/app.css">
+</head>
+
+<body>
+
+    <header class="site-header contenedor">
+        <img class="logo" src="../../images/logo.png" alt="Logo market">
+
+        <nav class="nav">
+            <a class="active" href="./ConsultarUsuario.html">Usuarios</a>
+            <a href="../clientes-mocks/ConsultarClientes.html">Clientes</a>
+            <a href="../proveedores-mocks/ConsultarProveedores.html">Proveedores</a>
+            <a href="#">Productos</a>
+            <a href="#">Ventas</a>
+            <a href="#">Reportes</a>
+            <a href="#" onclick="closeSession()">Cerrar sesión</a>
+        </nav>
+
+
+        <nav class="second-nav">
+            <a class="active" href="./ConsultarUsuario.html">Ver Usuarios</a>
+            <a class="" href="./registrarUsuarios.html">Agregar Usuarios</a>
+        </nav>
+    </header>
+
+    <h1>Lista de usuarios</h1>
+
+    <main class="contenedor-tablas">
+        <div class="search">
+            <div class="search-form">
+                <input type="search" id="search-user" placeholder="Buscar usuario por cedula" />
+                <button class="btn btn-azul2 search-button">Buscar</button>
+                <button class="btn btn-azul2 search-button">Ver todos</button>
+            </div>
+        </div>
+        <div id="user-list">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Usuario</th>
+                        <th>Correo</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="user-row">
+                    <tr>
+                        <td>11111</td>
+                        <td>test</td>
+                        <td>test@email.com</td>
+                        <td>111</td>
+                        <td>
+                            <a href="./ActualizarUsuario.html">
+                                <div class="action-buttons">
+                                    <i class="bi bi-pen-fill"></i>
+                                    <p>Editar</p>
+                                </div>
+                            </a>
+                            <div class="action-buttons">
+                                <i class="bi bi-archive-fill"></i>
+                                <p>Eliminar</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>123456789</td>
+                        <td>password</td>
+                        <td>usuario@usuario.com</td>
+                        <td>administrador</td>
+                        <td>
+                            <a href="./ActualizarUsuario.html">
+                                <div class="action-buttons">
+                                    <i class="bi bi-pen-fill"></i>
+                                    <p>Editar</p>
+                                </div>
+                            </a>
+                            <div class="action-buttons">
+                                <i class="bi bi-archive-fill"></i>
+                                <p>Eliminar</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

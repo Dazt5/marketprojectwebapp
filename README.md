@@ -1,5 +1,9 @@
-## Web application for the project "Mercado Genérico" Mintic phase 3
+# Tienda Genérica Web Client
 
-Mockups:
-Login: https://dazt5.github.io/marketprojectwebapp/designs/login.html
-Register: https://dazt5.github.io/marketprojectwebapp/designs/signup.html
+## Requirements
+
+- Have the server running on port 5000
+
+## Mockups
+
+- See mockups designs [here](https://github.com/Dazt5/marketprojectwebapp/mocks)

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/app.css">
+</head>
+
+<body onload="getClientes()">
+
+    <header class="site-header contenedor">
+        <img class="logo" src="../../images/logo.png" alt="Logo market">
+
+        <nav class="nav">
+            <a href="../usuarios-mocks/ConsultarUsuario.html">Usuarios</a>
+            <a class="active" href="./ConsultarClientes.html">Clientes</a>
+            <a href="../proveedores-mocks/ConsultarProveedores.html">Proveedores</a>
+            <a href="#">Productos</a>
+            <a href="#">Ventas</a>
+            <a href="#">Reportes</a>
+            <a href="#">Cerrar sesión</a>
+        </nav>
+
+        <nav class="second-nav">
+            <a class="active" href="./ConsultarClientes.html">Ver Clientes</a>
+            <a class="" href="./RegistrarCliente.html">Agregar Clientes</a>
+        </nav>
+    </header>
+
+    <h1>Lista de Clientes</h1>
+
+    <main class="contenedor-tablas">
+        <div class="search">
+            <div class="search">
+                <div class="search-form">
+                    <input type="search" id="search-user" placeholder="Buscar usuario por cedula" />
+                    <button class="btn btn-azul2 search-button">Buscar</button>
+                    <button class="btn btn-azul2 search-button">Ver todos</button>
+                </div>
+            </div>
+        </div>
+        <div id="client-list">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Cedula</th>
+                        <th>Dirección</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody id="client-row">
+                    <tr>
+                        <td>2952324912</td>
+                        <td>CI 87 -4#30</td>
+                        <td>Yerin@gmail.com</td>
+                        <td>Yerin</td>
+                        <td>3022302144</td>
+                        <td>
+                            <a href="./ActualizarCliente.html">
+                                <div class="action-buttons">
+                                    <i class="bi bi-pen-fill"></i>
+                                    <p>Editar</p>
+                                </div>
+                            </a>
+                            <div class="action-buttons">
+                                <i class="bi bi-archive-fill"></i>
+                                <p>Eliminar</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>123456789</td>
+                        <td>CI 85 -4#30</td>
+                        <td>Sinb@gmail.com</td>
+                        <td>Sinb</td>
+                        <td>3022302144</td>
+                        <td>
+                            <a href="./ActualizarCliente.html">
+                                <div class="action-buttons">
+                                    <i class="bi bi-pen-fill"></i>
+                                    <p>Editar</p>
+                                </div>
+                            </a>
+                            <div class="action-buttons">
+                                <i class="bi bi-archive-fill"></i>
+                                <p>Eliminar</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+</body>
+
+</html>
