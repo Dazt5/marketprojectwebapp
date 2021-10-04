@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Proveedores</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/app.css">
+</head>
+
+<body onload="getProveedores()">
+
+    <header class="site-header contenedor">
+        <img class="logo" src="../../images/logo.png" alt="Logo market">
+
+        <nav class="nav">
+            <a href="../usuarios/ConsultarUsuario.html">Usuarios</a>
+            <a href="../clientes/ConsultarClientes.html">Clientes</a>
+            <a class="active" href="./ConsultarProveedores.html">Proveedores</a>
+            <a href="#">Productos</a>
+            <a href="#">Ventas</a>
+            <a href="#">Reportes</a>
+            <a href="#" onclick="closeSession()">Cerrar sesión</a>
+        </nav>
+
+        <nav class="second-nav">
+            <a class="active" href="./ConsultarProveedores.html">Ver Proveedores</a>
+            <a class="" href="./RegistrarProveedor.html">Agregar Proveedor</a>
+        </nav>
+    </header>
+
+    <h1>Lista de Proveedores</h1>
+    <main class="contenedor-tablas">
+        <div class="search">
+            <div class="search-form">
+                <input type="search" id="search-proveedor" placeholder="Buscar Proveedor por NIT" />
+                <button class="btn btn-azul2 search-button" onclick="getProveedorByNIT(event)">Buscar</button>
+                <button class="btn btn-azul2 search-button" onclick="getProveedores(event)">Ver todos</button>
+            </div>
+        </div>
+        <div id="proveedores-list">
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../controllers/utils.js"></script>
+    <script src="../../controllers/ProveedoresController.js"></script>
+</body>
+
+</html>
