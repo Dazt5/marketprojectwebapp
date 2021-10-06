@@ -276,6 +276,7 @@ form .module-field .module-input input {
 .actions {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 10px;
 }
 
 /* TABLAS GENÉRICAS CON BÚSQUEDA GENÉRICA*/
