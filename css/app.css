@@ -194,7 +194,7 @@ nav.nav a:hover {
     border-right: 1px solid #E6E6E6;
 }
 
-form input {
+form input,select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -268,7 +268,7 @@ form .module-field label {
     font-size: 15px;
 }
 
-form .module-field .module-input input {
+form .module-field .module-input input,select {
     border-radius: 5px;
     width: 80%;
 }
@@ -291,12 +291,12 @@ form .module-field .module-input input {
     display: flex;
 }
 
-.search .search-form input {
+.search .search-form input,select {
     padding: 10px;
     font-size: 20px;
 }
 
-.search .search-form input::placeholder {
+.search .search-form input,select::placeholder {
     font-size: 15px;
 }
 
