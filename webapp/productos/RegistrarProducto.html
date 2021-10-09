@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar un producto</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/app.css">
+</head>
+
+<body onload="getProveedores();">
+
+    <header class="site-header contenedor">
+        <img class="logo" src="../../images/logo.png" alt="Logo market">
+
+        <nav class="nav">
+            <a href="../usuarios/ConsultarUsuario.html">Usuarios</a>
+            <a href="../clientes/ConsultarClientes.html">Clientes</a>
+            <a href="../proveedores/ConsultarProveedores.html">Proveedores</a>
+            <a class="active" href="../productos/ConsultarProductos.html">Productos</a>
+            <a href="#">Ventas</a>
+            <a href="#">Reportes</a>
+            <a href="#" onclick="closeSession()">Cerrar sesión</a>
+        </nav>
+
+        <nav class="second-nav">
+            <a href="./ConsultarProductos.html">Ver Productos</a>
+            <a class="active" href="./RegistrarProducto.html">Agregar Producto</a>
+        </nav>
+    </header>
+
+    <main class="contenedor form-container-modules">
+        <h1>Registrar un Producto</h1>
+
+        <form class="module-form">
+
+            <div class="fields">
+                <div class="module-field">
+                    <label>Código de Producto</label>
+                    <div class="module-input">
+                        <input type="number" id="codigo_producto" placeholder="Código del producto">
+                    </div>
+                </div>
+
+                <div class="module-field">
+                    <label>Iva del Producto</label>
+                    <div class="module-input">
+                        <input type="number" id="iva" placeholder="Iva del producto">
+                    </div>
+                </div>
+
+                <div class="module-field">
+                    <label>Proveedor</label>
+                    <div class="module-input">
+                        <select id="proveedor">
+                            <option selected value="">-- Seleccione un proveedor --</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="module-field">
+                    <label>Nombre del Producto</label>
+                    <div class="module-input">
+                        <input type="text" id="nombre_producto" placeholder="Ingrese el nombre del producto">
+                    </div>
+                </div>
+
+                <div class="module-field">
+                    <label>Precio de compra</label>
+                    <div class="module-input">
+                        <input type="number" id="precio_compra" placeholder="Ingrese el precio de compra">
+                    </div>
+                </div>
+
+                <div class="module-field">
+                    <label>Precio de venta</label>
+                    <div class="module-input">
+                        <input type="number" id="precio_venta" placeholder="Ingrese el precio de venta">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-verde" onclick="createProducto(event)">Crear</button>
+            </div>
+        </form>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../controllers/utils.js"></script>
+    <script src="../../controllers/ProductosController.js"></script>
+</body>
