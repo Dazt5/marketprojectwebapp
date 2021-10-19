@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/app.css">
+</head>
+
+<body onload="getProductos(); getCarrito();">
+
+    <header class="site-header contenedor">
+        <img class="logo" src="../../images/logo.png" alt="Logo market">
+
+        <nav class="nav">
+            <a href="../usuarios/ConsultarUsuario.html">Usuarios</a>
+            <a href="../clientes/ConsultarClientes.html">Clientes</a>
+            <a href="../proveedores/ConsultarProveedores.html">Proveedores</a>
+            <a href="../productos/ConsultarProductos.html">Productos</a>
+            <a class="active" href="./ConsultarVentas.html">Ventas</a>
+            <a href="#" onclick="closeSession()">Cerrar sesión</a>
+        </nav>
+
+        <nav class="second-nav">
+            <a class="" href="./ConsultarVentas.html">Consultar Ventas</a>
+            <a class="active" href="./RealizarVenta.html">Realizar Venta</a>
+        </nav>
+    </header>
+    <h1>Realizar venta</h1>
+    <main class="contenedor-tablas">
+
+        <h2>Carrito</h2>
+        <div id="carrito-list">
+
+        </div>
+
+        <div class="search">
+            <div class="search-form">
+                <input type="search" id="cedula-cliente" placeholder="Cédula del cliente" />
+                <button class="btn btn-azul2 search-button" onclick="realizarCompra(event)">Comprar</button>
+            </div>
+        </div>
+        <h4 id="subtotal"></h4>
+        <h4 id="total-iva"></h4>
+        <h4 id="total"></h4>
+
+        <h2>Productos</h2>
+
+        <div class="search">
+            <div class="search-form">
+                <input type="search" id="search-producto" placeholder="Buscar producto por código" />
+                <button class="btn btn-azul2 search-button" onclick="getProductosById(event)">Buscar</button>
+                <button class="btn btn-azul2 search-button" onclick="getProductos()">Ver todos</button>
+            </div>
+        </div>
+        <div id="productos-list">
+
+        </div>
+    </main>
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../controllers/utils.js"></script>
+    <script src="../../controllers/VentasController.js"></script>
+</body>
