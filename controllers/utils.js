@@ -12,7 +12,6 @@ function configureAxiosHeaders(token) {
 }
 
 function getErrorMessage(message) {
-
     return `
         <div class="alert">
             <div class="alert-card">
@@ -34,7 +33,6 @@ const getSpiner = () => (`
 `)
 
 const getGenericTable = (headers, tbodyIdName) => {
-
     let tableHeader = '';
     headers.forEach(header => {
         tableHeader += `<th>${header}</th>\n`
@@ -72,7 +70,6 @@ const verifySession = async () => {
 }
 
 const closeSession = async () => {
-    
     localStorage.removeItem("token");
     window.location.href = "../";
 }
