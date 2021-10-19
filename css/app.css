@@ -167,9 +167,14 @@ ul {
     width: 300px;
 }
 
+nav{
+    display: flex;
+    justify-content: center;
+}
+
 nav.nav a {
     padding: 1.4rem;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     display: inline-block;
     font-size: 25px;
     font-weight: 700;
@@ -177,11 +182,11 @@ nav.nav a {
 
 nav.second-nav a {
     padding: 1.4rem;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     display: inline-block;
     font-size: 20px;
     font-weight: 700;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 nav.nav a:hover {
@@ -289,6 +294,8 @@ form .module-field .module-input input,select {
 
 .search-form {
     display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .search .search-form input,select {
@@ -307,7 +314,7 @@ form .module-field .module-input input,select {
 
 main.contenedor-tablas {
     width: 100%;
-    padding: 60px 68px 40px;
+    padding: 10px 68px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -352,6 +359,18 @@ main.contenedor-tablas .table tbody tr td .action-buttons i.bi-archive-fill {
     transition: transform .5s;
 }
 
+i:hover{
+    cursor: pointer;
+}
+
+i.green{
+    color: green;
+}
+
+i.red{
+    color: red;
+}
+
 main.contenedor-tablas .table tbody tr td .action-buttons i.bi-pen-fill:hover {
     transform: scale(1.5);
     cursor: pointer;
@@ -360,4 +379,22 @@ main.contenedor-tablas .table tbody tr td .action-buttons i.bi-pen-fill:hover {
 main.contenedor-tablas .table tbody tr td .action-buttons i.bi-archive-fill:hover {
     transform: scale(1.5);
     cursor: pointer;
+}
+
+.quantity-product input{
+
+    border-radius: 10px;
+    width: 120px;
+    padding: 0 10px;
+}
+
+.venta-icono{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.venta-icono i {
+    margin-left: 10px;
+    font-size: 25px;
+    color: seagreen;
 }
