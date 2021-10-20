@@ -1,4 +1,4 @@
-const BACKEND_URI = "http://ec2-18-188-172-113.us-east-2.compute.amazonaws.com:5000";
+const BACKEND_URI = "http://localhost:5000";
 
 
 function configureAxiosHeaders(token) {
