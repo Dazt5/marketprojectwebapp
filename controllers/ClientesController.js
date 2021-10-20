@@ -83,7 +83,7 @@ async function getClienteByCedula(e) {
         const { data} = await axios.get(`${BACKEND_URI}/clientes/${cedula}`,configureAxiosHeaders(token));
 
         if (data == null) {
-            alert("No se encuentra un usuario registrado con la cédula indicada.")
+                return alert("No se encuentra un usuario registrado con la cédula indicada.")
         } else {
             clientList.innerHTML =
                 getGenericTable(["Cedula", "Dirección", "Email", "Nombre", "Telefono", "Acciones"], CLIENT_ROW_ID);
