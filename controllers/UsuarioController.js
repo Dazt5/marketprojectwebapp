@@ -86,7 +86,7 @@ const getUsuarioByCedula = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/user/${cedula}`,configureAxiosHeaders(token));
 
         if (data == null) {
-            alert("No se encuentra un usuario registrado con la cédula indicada.")
+            return alert("No se encuentra un usuario registrado con la cédula indicada.")
         } else {
 
             userList.innerHTML =
