@@ -18,6 +18,9 @@ verifySession();
 const getProductos = async () => {
 
     try {
+
+        productosList.innerHTML = getSpinner();
+        
         //Petición HTTP al servidor.
         const token = getSessionToken();
         const { data } = await axios.get(`${BACKEND_URI}/productos/`, configureAxiosHeaders(token));
@@ -65,12 +68,7 @@ const getProductos = async () => {
         }
 
     } catch (error) {
-        console.log(error.response);
-        if (error.message === "Network Error") {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error desconocido, intente de nuevo")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -81,7 +79,7 @@ const getProductoById = async (e) => {
     const codigoProducto = searchProducto.value;
 
     if (codigoProducto.trim().length == 0) {
-        return alert("Debe ingresar el código del producto para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar el código del producto para poder realizar una búsqueda.")
     }
     try {
 
@@ -89,7 +87,7 @@ const getProductoById = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/productos/${codigoProducto}`, configureAxiosHeaders(token));
 
         if (!data) {
-            return alert("No se encuentra un producto registrado con ese código.")
+            return getErrorPopupMessage("No se encuentra un producto registrado con ese código.")
         }
 
         productosList.innerHTML =
@@ -122,12 +120,7 @@ const getProductoById = async (e) => {
 
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -149,17 +142,11 @@ const createProducto = async (e) => {
         const { data } = await axios.post(`${BACKEND_URI}/productos/`, productoData, configureAxiosHeaders(token));
 
         if (data) {
-            alert("El producto se ha creado.");
+            getSuccessPopupMessage("El producto se ha creado.");
             return setTimeout(() => { window.location.href = "./ConsultarProductos.html" }, 1000);
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo.")
-        } else if (error.response.status === 400 || error.respose.status === 409) {
-            alert(error.response.data.message);
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo.")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -185,7 +172,7 @@ const getProveedores = async () => {
         document.querySelector('#proveedor').innerHTML = options;
 
     } catch (error) {
-        console.log(error);
+        axiosExceptionHandler(error);
     }
 }
 
@@ -201,14 +188,7 @@ const deleteProducto = async (id) => {
         }
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo.")
-        } else if (error.response.status === 404) {
-            alert(error.response.data.message);
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo");
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -219,7 +199,7 @@ const getProductoInfo = async () => {
     const codigoProductoinURI = urlParams.get("id").trim();
 
     if (isNaN(codigoProductoinURI)) {
-        alert("El Código de producto a buscar contiene una sintaxis inválida");
+        getErrorPopupMessage("El Código de producto a buscar contiene una sintaxis inválida");
         return setTimeout(() => { window.location.href = "./ConsultarProductos.html" }, 1000);
     }
     try {
@@ -227,7 +207,7 @@ const getProductoInfo = async () => {
         const { data } = await axios.get(`${BACKEND_URI}/productos/${codigoProductoinURI}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            alert("El producto al que hacer referencia no está disponible.");
+            getErrorPopupMessage("El producto al que hacer referencia no está disponible.");
             return setTimeout(() => { window.location.href = "./ConsultarProductos.html"; }, 0);
         }
 
@@ -249,12 +229,7 @@ const getProductoInfo = async () => {
         precioCompra.value = data.precio_compra;
         precioVenta.value = data.precio_venta;
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            alert("Ha ocurrido un error desconocido");
-        }
+        axiosExceptionHandler(error);
         return setTimeout(() => { window.location.href = "./ConsultarProductos.html"; }, 0);
     }
 }
@@ -277,17 +252,10 @@ const updateProducto = async (e) => {
         const { data } = await axios.put(`${BACKEND_URI}/productos/${codigoProductoinURI}`, productoData, configureAxiosHeaders(token));
 
         if (data) {
-            alert("Producto actualizado");
+            getSuccessPopupMessage("Producto actualizado");
             return setTimeout(() => { window.location.href = "./ConsultarProductos.html" }, 1000);
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo.")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message);
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo");
-        }
+        axiosExceptionHandler(error);
     }
 }

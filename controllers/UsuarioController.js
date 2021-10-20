@@ -18,9 +18,11 @@ async function getUsuarios() {
     //Try-catch para capturar el posible error que se pueda producir, "Error 4xx o 5xx"
     try {
 
+        userList.innerHTML = getSpinner();
+
         //Petición HTTP al servidor.
         const token = getSessionToken();
-        const { data } = await axios.get(`${BACKEND_URI}/user/`,configureAxiosHeaders(token));
+        const { data } = await axios.get(`${BACKEND_URI}/user/`, configureAxiosHeaders(token));
 
         if (data.length <= 0) {
 
@@ -57,17 +59,12 @@ async function getUsuarios() {
                         </div>
                     </td>
                 </tr>
-                `; 
+                `;
             }
             document.querySelector(`#${USER_ROW_ID}`).innerHTML = rows;
         }
     } catch (error) {
-        console.log(error.response);
-        if (error.message === "Network Error") {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error desconocido, intente de nuevo")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -77,16 +74,16 @@ const getUsuarioByCedula = async (e) => {
     const cedula = searchUser.value;
 
     if (cedula.trim().length == 0) {
-        return alert("Debe ingresar la cédula para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar la cédula para poder realizar una búsqueda.")
     }
 
     try {
         //Petición HTTP al servidor.
         const token = getSessionToken();
-        const { data } = await axios.get(`${BACKEND_URI}/user/${cedula}`,configureAxiosHeaders(token));
+        const { data } = await axios.get(`${BACKEND_URI}/user/${cedula}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            return alert("No se encuentra un usuario registrado con la cédula indicada.")
+            return getErrorPopupMessage("No se encuentra un usuario registrado con la cédula indicada.")
         } else {
 
             userList.innerHTML =
@@ -117,12 +114,7 @@ const getUsuarioByCedula = async (e) => {
         }
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -132,21 +124,14 @@ const deleteUser = async (cedula) => {
     try {
         //Petición HTTP tipo DELETE al servidor.
         const token = getSessionToken();
-        const { data } = await axios.delete(`${BACKEND_URI}/user/${cedula}`,configureAxiosHeaders(token));
+        const { data } = await axios.delete(`${BACKEND_URI}/user/${cedula}`, configureAxiosHeaders(token));
 
         if (data) {
             return getUsuarios();
         }
 
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.message === "Request failed with status code 404") {
-            alert("El registro que quiere eliminar ya no se encuentra disponible")
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -160,11 +145,11 @@ const getUserInfo = async () => {
     let cedula = urlParams.get("id").trim();
 
     if (isNaN(cedula)) {
-        alert("El id que se está buscando tiene una sintaxis inválida");
+        getErrorPopupMessage("El id que se está buscando tiene una sintaxis inválida");
         return setTimeout(() => { window.location.href = "./ConsultarUsuario.html"; }, 1000);
     }
     const token = getSessionToken();
-    const { data } = await axios.get(`${BACKEND_URI}/user/${cedula}`,configureAxiosHeaders(token));
+    const { data } = await axios.get(`${BACKEND_URI}/user/${cedula}`, configureAxiosHeaders(token));
 
     cedulaInput.value = data.cedulaUsuario;
     usuarioInput.value = data.usuario;
@@ -198,25 +183,18 @@ const updateUser = async (e) => {
         const { data } = await axios.put(`${BACKEND_URI}/user/${cedula}`, userData, configureAxiosHeaders(token));
 
         if (data) {
-            alert("El usuario se ha actualizado.");
+            getSuccessPopupMessage("El usuario se ha actualizado.");
             return setTimeout(() => { window.location.href = "./ConsultarUsuario.html"; }, 1000);
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)   
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
 const createUser = async (e) => {
     e.preventDefault();
     const userData = {
-        "cedulaUsuario":cedulaInput.value,
+        "cedulaUsuario": cedulaInput.value,
         "emailUsuario": emailInput.value,
         "nombreUsuario": nombreInput.value,
         "usuario": usuarioInput.value,
@@ -227,17 +205,10 @@ const createUser = async (e) => {
         const token = getSessionToken();
         const { data } = await axios.post(`${BACKEND_URI}/user/`, userData, configureAxiosHeaders(token));
         if (data) {
-            alert("El usuario se ha creado.");
+            getSuccessPopupMessage("El usuario se ha creado.");
             return setTimeout(() => { window.location.href = "./ConsultarUsuario.html"; }, 1000);
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)   
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }

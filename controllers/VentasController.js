@@ -45,7 +45,11 @@ verifySession();
 /*******  REALIZAR VENTAS ******/
 const getProductos = async () => {
     try {
+
         //Petición HTTP al servidor.
+
+        productosList.innerHTML = getSpinner();
+
         const token = getSessionToken();
         const { data } = await axios.get(`${BACKEND_URI}/productos/`, configureAxiosHeaders(token));
 
@@ -95,7 +99,7 @@ const getProductosById = async (e) => {
     e.preventDefault();
     const codigo = searchProducto.value;
     if (codigo.trim().length == 0) {
-        return alert("Debe ingresar el código para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar el código para poder realizar una búsqueda.")
     }
 
     try {
@@ -103,7 +107,7 @@ const getProductosById = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/productos/${codigo}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            return alert("No se encuentra un producto registrado con el código indicado.")
+            return getErrorPopupMessage("No se encuentra un producto registrado con el código indicado.")
         } else {
             productosList.innerHTML =
                 getGenericTable(["Código", "Nombre del producto", "Precio", "IVA", "Agregar"], PRODUCTO_ROW_ID);
@@ -126,12 +130,7 @@ const getProductosById = async (e) => {
             return document.querySelector(`#${PRODUCTO_ROW_ID}`).innerHTML = row;
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -180,18 +179,13 @@ const getCarrito = () => {
             carritoList.innerHTML = alert;
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
 const agregarProducto = async (codigoProducto) => {
     if (codigoProducto.length == 0) {
-        return alert("El producto que intentó agregar ya no se encuentra disponible, recargue la página y vuelva a intentarlo")
+        return getErrorMessage("El producto que intentó agregar ya no se encuentra disponible, recargue la página y vuelva a intentarlo")
     }
     try {
         const token = getSessionToken();
@@ -200,15 +194,7 @@ const agregarProducto = async (codigoProducto) => {
         getCarrito();
 
     } catch (error) {
-        console.log(error)
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -217,7 +203,7 @@ const agregarAlCarrito = (nuevoProducto) => {
     let nuevoProductoCarrito, total, subTotal, totalIva;
 
     if (cantidad.trim() <= 0 || !Number(cantidad)) {
-        return alert("debe ingresar una cantidad válida")
+        return getErrorMessage("debe ingresar una cantidad válida")
     }
 
     console.log(existeProducto(nuevoProducto.codigo_producto));
@@ -295,28 +281,30 @@ const realizarCompra = async (e) => {
                 "totalVenta": compraTotal,
                 productos
             }
-
             //Petición HTTP al servidor.
             const token = getSessionToken();
             const { data } = await axios.post(`${BACKEND_URI}/ventas/`, venta, configureAxiosHeaders(token));
 
-            alert("Compra realizada exitosamente.")
-
+            if (data) {
+                getSuccessPopupMessage("Compra realizada exitosamente.")
+                return setTimeout(() => { window.location.href = "./ConsultarVentas.html"; }, 400);
+            }
         } catch (error) {
-            alert("Ha ocurrido un error al realizar su compra.")
-            console.log(error.response);
+            getErrorPopupMessage("Ha ocurrido un error al realizar su compra.")
         }
 
     } else if (cedula.length <= 0) {
-        alert("Debe digitar la cédula del cliente")
+        getErrorMessage("Debe digitar la cédula del cliente")
     } else {
-        alert("No ha seleccionado ningún producto, el carrito está vacio.")
+        getErrorMessage("No ha seleccionado ningún producto, el carrito está vacio.")
     }
 }
 
 /*******  CONSULTAR VENTAS ******/
 
 const consultarVentas = async () => {
+
+    ventasList.innerHTML = getSpinner();
 
     try {
         //Petición HTTP al servidor.
@@ -356,12 +344,7 @@ const consultarVentas = async () => {
         }
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -370,7 +353,7 @@ const consultarVentaByCodigo = async (e) => {
 
     const cedulaCliente = searchVenta.value;
     if (cedulaCliente.trim().length == 0) {
-        return alert("Debe ingresar el código para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar el código para poder realizar una búsqueda.")
     }
 
     try {
@@ -379,7 +362,7 @@ const consultarVentaByCodigo = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/ventas/${cedulaCliente}`, configureAxiosHeaders(token));
 
         if (data.length <= 0) {
-            return alert("La cédula ingresada no tiene compras registradas")
+            return getErrorPopupMessage("La cédula ingresada no tiene compras registradas")
         } else {
 
             ventasList.innerHTML =
@@ -406,12 +389,7 @@ const consultarVentaByCodigo = async (e) => {
             document.querySelector(`#${VENTAS_ROW_ID}`).innerHTML = rows;
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -421,7 +399,7 @@ const obtenerDetallesVenta = async () => {
     const codigoVenta = urlParams.get("id").trim();
 
     if (codigoVenta.length <= 0) {
-        alert("Ha ocurrido un error, intente de nuevo mas tarde.");
+        getErrorMessage("Ha ocurrido un error, intente de nuevo mas tarde.");
         return setTimeout(() => { window.location.href = "./ConsultarVentas.html" }, 1000);
     }
 
@@ -433,8 +411,6 @@ const obtenerDetallesVenta = async () => {
 
         const detalles = detallesResponse.data;
         const venta = ventaResponse.data;
-
-        console.log(detalles);
 
         detalleVentaList.innerHTML =
             getGenericTable(["Código", "SubTotal", "IVA", "Total"], DETALLE_VENTAS_ROW_ID);
@@ -476,7 +452,7 @@ const obtenerDetallesVenta = async () => {
         document.querySelector(`#${DETALLE_VENTAS_CLIENTE_ROW_ID}`).innerHTML = detalleClienteRow
 
         detalleVentaProductos.innerHTML =
-            getGenericTable(["Nombre", "Precio C/U","IVA","Cantidad Comprada","SubTotal", "Total IVA", "Total"], DETALLE_VENTAS_PRODUCTOS_ROW_ID);
+            getGenericTable(["Nombre", "Precio C/U", "IVA", "Cantidad Comprada", "SubTotal", "Total IVA", "Total"], DETALLE_VENTAS_PRODUCTOS_ROW_ID);
 
         let detalleProductosRows = ``
         for (productoVendido of detalles) {
@@ -496,13 +472,8 @@ const obtenerDetallesVenta = async () => {
         document.querySelector(`#${DETALLE_VENTAS_PRODUCTOS_ROW_ID}`).innerHTML = detalleProductosRows;
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            alert("Ha ocurrido un error desconocido");
-        }
-        //return setTimeout(() => { window.location.href = "./ConsultarProductos.html"; }, 0);
+        axiosExceptionHandler(error);
+        return setTimeout(() => { window.location.href = "./ConsultarProductos.html"; }, 0);
     }
 
 }

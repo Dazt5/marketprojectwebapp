@@ -1,5 +1,4 @@
-const FRONTED_URI = "http://127.0.0.1:5501";
-const BACKEND_URI = "http://127.0.0.1:5000"
+const BACKEND_URI = "http://ec2-18-188-172-113.us-east-2.compute.amazonaws.com:5000";
 
 
 function configureAxiosHeaders(token) {
@@ -9,6 +8,43 @@ function configureAxiosHeaders(token) {
             'Authorization': `Bearer ${token}`
         }
     }
+}
+
+function getErrorPopupMessage(message) {
+    return Swal.fire(
+        'Error',
+        message,
+        'error'
+    );
+}
+
+function getInfoPopupMessage(message) {
+    return Swal.fire(
+        'Información',
+        message,
+        'question'
+    );
+}
+
+function getSuccessPopupMessage(message) {
+    return Swal.fire(
+        'Operación Exitosa',
+        message,
+        'success'
+    );
+}
+
+function axiosExceptionHandler(error) {
+    if (!error.response) {
+        getErrorPopupMessage("Ha ocurrido un error de conexión")
+    } else if (error.response.status === 500) {
+        getErrorMessage(error.response.data.message);
+    } else if (error.response.status === 400 || error.respose.status === 409) {
+        getErrorMessage(error.response.data.message);
+    } else {
+        getErrorMessage("Ha ocurrido un error desconocido");
+    }
+
 }
 
 function getErrorMessage(message) {
@@ -26,10 +62,10 @@ function getErrorMessage(message) {
     `
 }
 
-const getSpiner = () => (`        
-    < div id = "user-list" >
+const getSpinner = () => (`        
+    <div>
         <div class="spinner"></div>
-    </div >
+    </div>
 `)
 
 const getGenericTable = (headers, tbodyIdName) => {

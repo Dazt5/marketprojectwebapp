@@ -11,16 +11,15 @@ const login = async (e) => {
     }
 
     try {
-    
-        const {data} = await axios.post('http://localhost:5000/auth/login',userData)
+        const {data} = await axios.post(`${BACKEND_URI}/auth/login`,userData)
 
         if (data) {
-            alert("Inicio de sesión satisfactorio");
+            getSuccessPopupMessage("Inicio de sesión satisfactorio");
             window.localStorage.setItem("token", data.token);
             return setTimeout(() => { window.location.href = "./usuarios/ConsultarUsuario.html"; }, 1000);
         }
 
     } catch (error) {
-        alert(error.response.data.message)
+        axiosExceptionHandler(error);
     }
 }

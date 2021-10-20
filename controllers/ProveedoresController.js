@@ -16,6 +16,9 @@ verifySession();
 
 async function getProveedores() {
     try {
+
+        proveedoresList.innerHTML = getSpinner();
+
         //Petición HTTP al servidor.
         const token = getSessionToken();
         const { data } = await axios.get(`${BACKEND_URI}/proveedores/`, configureAxiosHeaders(token));
@@ -59,12 +62,7 @@ async function getProveedores() {
         }
 
     } catch (error) {
-        console.log(error.response);
-        if (error.message === "Network Error") {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error desconocido, intente de nuevo")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -74,7 +72,7 @@ const getProveedorByNIT = async (e) => {
     const nit = searchProveedor.value;
 
     if (nit.trim().length == 0) {
-        return alert("Debe ingresar el nit para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar el nit para poder realizar una búsqueda.")
     }
 
     try {
@@ -83,7 +81,7 @@ const getProveedorByNIT = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/proveedores/${nit}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            return alert("No se encuentra un proveedor registrado con el nit indicado.")
+            return getErrorPopupMessage("No se encuentra un proveedor registrado con el nit indicado.")
         } else {
 
             proveedoresList.innerHTML =
@@ -113,12 +111,7 @@ const getProveedorByNIT = async (e) => {
             return document.querySelector(`#${PROVEEDOR_ROW_ID}`).innerHTML = row;
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -136,18 +129,11 @@ const createProveedor = async (e) => {
         const token = getSessionToken();
         const { data } = await axios.post(`${BACKEND_URI}/proveedores/`, proveedorData, configureAxiosHeaders(token));
         if (data) {
-            alert("El proveedor se ha creado.");
+            getSuccessPopupMessage("El proveedor se ha creado.");
             return setTimeout(() => { window.location.href = "./ConsultarProveedores.html"; }, 1000);
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400 ||error.response.status === 409 ) {
-            alert(error.response.data.message)
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -160,15 +146,7 @@ const deleteProveedor = async (nit) => {
             return getProveedores();
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.message === "Request failed with status code 404") {
-            alert("El registro que quiere eliminar ya no se encuentra disponible")
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -179,18 +157,22 @@ const getProveedorInfo = async () => {
     let nit = urlParams.get("id").trim();
 
     if (isNaN(nit)) {
-        alert("El nit que se está buscando tiene una sintaxis inválida");
+        getErrorPopupMessage("El nit que se está buscando tiene una sintaxis inválida");
         return setTimeout(() => { window.location.href = "./ConsultarProveedores.html"; }, 1000);
     }
 
-    const token = getSessionToken();
-    const { data } = await axios.get(`${BACKEND_URI}/proveedores/${nit}`, configureAxiosHeaders(token));
+    try {
+        const token = getSessionToken();
+        const { data } = await axios.get(`${BACKEND_URI}/proveedores/${nit}`, configureAxiosHeaders(token));
 
-    nitInput.value = data.nitproveedor;
-    ciudadInput.value = data.ciudad_proveedor;
-    direccionInput.value = data.direccion_proveedor;
-    nombreInput.value = data.nombre_proveedor;
-    telefonoInput.value = data.telefono_proveedor;
+        nitInput.value = data.nitproveedor;
+        ciudadInput.value = data.ciudad_proveedor;
+        direccionInput.value = data.direccion_proveedor;
+        nombreInput.value = data.nombre_proveedor;
+        telefonoInput.value = data.telefono_proveedor;
+    } catch (error) {
+        axiosExceptionHandler(error);
+    }
 }
 
 const updateProveedor = async (e) => {
@@ -209,18 +191,11 @@ const updateProveedor = async (e) => {
         const token = getSessionToken();
         const { data } = await axios.put(`${BACKEND_URI}/proveedores/${nit}`, proveedorData, configureAxiosHeaders(token));
         if (data) {
-            alert("El usuario se ha actualizado.");
+            getSuccessPopupMessage("El usuario se ha actualizado.");
             return setTimeout(() => { window.location.href = "./ConsultarProveedores.html"; }, 1000);
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 

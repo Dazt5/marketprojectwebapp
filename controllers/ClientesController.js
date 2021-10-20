@@ -15,10 +15,11 @@ const DELETE_USER_FUNCTIONAME = "deleteClient()";
 
 verifySession();
 async function getClientes() {
-    
     try {
+        clientList.innerHTML = getSpinner();
+
         const token = getSessionToken();
-        const { data } = await axios.get(`${BACKEND_URI}/clientes/`,configureAxiosHeaders(token));
+        const { data } = await axios.get(`${BACKEND_URI}/clientes/`, configureAxiosHeaders(token));
 
         if (data.length <= 0) {
 
@@ -59,12 +60,7 @@ async function getClientes() {
             document.querySelector(`#${CLIENT_ROW_ID}`).innerHTML = rows;
         }
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error de conexión con el servidor")
-        } else {
-            userList.innerHTML = getErrorMessage("Ha ocurrido un error desconocido, intente de nuevo")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -75,15 +71,15 @@ async function getClienteByCedula(e) {
     const cedula = searchUser.value;
 
     if (cedula.trim().length == 0) {
-        return alert("Debe ingresar la cédula para poder realizar una búsqueda.")
+        return getErrorPopupMessage("Debe ingresar la cédula para poder realizar una búsqueda.")
     }
 
     try {
-        const token = getSessionToken(); 
-        const { data} = await axios.get(`${BACKEND_URI}/clientes/${cedula}`,configureAxiosHeaders(token));
+        const token = getSessionToken();
+        const { data } = await axios.get(`${BACKEND_URI}/clientes/${cedula}`, configureAxiosHeaders(token));
 
         if (data == null) {
-                return alert("No se encuentra un usuario registrado con la cédula indicada.")
+            return getErrorPopupMessage("No se encuentra un usuario registrado con la cédula indicada.")
         } else {
             clientList.innerHTML =
                 getGenericTable(["Cedula", "Dirección", "Email", "Nombre", "Telefono", "Acciones"], CLIENT_ROW_ID);
@@ -114,12 +110,7 @@ async function getClienteByCedula(e) {
         return document.querySelector(`#${CLIENT_ROW_ID}`).innerHTML = row;
 
     } catch (error) {
-        console.log(error);
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -132,47 +123,33 @@ const createClient = async (e) => {
         "direccion_cliente": direccionInput.value,
         "email_cliente": emailInput.value,
         "nombre_cliente": nombreInput.value,
-        "telefono_cliente":telefonoInput.value
+        "telefono_cliente": telefonoInput.value
     }
 
     try {
         const token = getSessionToken();
-        const { data } = await axios.post(`${BACKEND_URI}/clientes/`, userData,configureAxiosHeaders(token));
+        const { data } = await axios.post(`${BACKEND_URI}/clientes/`, userData, configureAxiosHeaders(token));
 
         if (data) {
-            alert("El cliente ha sido creado.");
+            getSuccessPopupMessage("El cliente ha sido creado.");
             return setTimeout(() => { window.location.href = "./ConsultarClientes.html"; }, 1000);
         }
 
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)   
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
 const deleteUser = async (cedula) => {
     try {
         const token = getSessionToken();
-        const { data } = await axios.delete(`${BACKEND_URI}/clientes/${cedula}`,configureAxiosHeaders(token));
+        const { data } = await axios.delete(`${BACKEND_URI}/clientes/${cedula}`, configureAxiosHeaders(token));
 
         if (data) {
             return getClientes();
         }
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.message === "Request failed with status code 404") {
-            alert("El registro que quiere eliminar ya no se encuentra disponible")
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
 
@@ -185,22 +162,25 @@ const getClientInfo = async () => {
     let cedula = urlParams.get("id").trim();
 
     if (isNaN(cedula)) {
-        alert("El id que se está buscando tiene una sintaxis inválida");
+        getErrorPopupMessage("El id que se está buscando tiene una sintaxis inválida");
         return setTimeout(() => { window.location.href = "./ConsultarUsuario.html"; }, 1000);
     }
+    try {
+        const token = getSessionToken();
+        const { data } = await axios.get(`${BACKEND_URI}/clientes/${cedula}`, configureAxiosHeaders(token));
 
-    const token = getSessionToken();
-    const { data } = await axios.get(`${BACKEND_URI}/clientes/${cedula}`,configureAxiosHeaders(token));
-    
-    cedulaInput.value = data.cedula_cliente;
-    direccionInput.value = data.direccion_cliente;
-    emailInput.value = data.email_cliente;
-    nombreInput.value = data.nombre_cliente;
-    telefonoInput.value = data.telefono_cliente;
+        cedulaInput.value = data.cedula_cliente;
+        direccionInput.value = data.direccion_cliente;
+        emailInput.value = data.email_cliente;
+        nombreInput.value = data.nombre_cliente;
+        telefonoInput.value = data.telefono_cliente;
+    } catch (error) {
+        axiosExceptionHandler(error);
+    }
 }
 
 const updateClient = async (e) => {
-    
+
     e.preventDefault();
 
     const queryString = window.location.search;
@@ -213,26 +193,19 @@ const updateClient = async (e) => {
         "direccion_cliente": direccionInput.value,
         "email_cliente": emailInput.value,
         "nombre_cliente": nombreInput.value,
-        "telefono_cliente":telefonoInput.value
+        "telefono_cliente": telefonoInput.value
     }
 
     try {
         const token = getSessionToken();
-        const { data } = await axios.put(`${BACKEND_URI}/clientes/${cedula}`, userData,configureAxiosHeaders(token));
+        const { data } = await axios.put(`${BACKEND_URI}/clientes/${cedula}`, userData, configureAxiosHeaders(token));
 
         if (data) {
-            alert("El cliente se ha actualizado.");
+            getSuccessPopupMessage("El cliente se ha actualizado.");
             return setTimeout(() => { window.location.href = "./ConsultarClientes.html"; }, 1000);
         }
 
     } catch (error) {
-        if (error.message === "Network Error") {
-            alert("Ha ocurrido un error de conexión con el servidor, intente de nuevo mas tarde")
-        } else if (error.response.status === 400) {
-            alert(error.response.data.message)   
-        }
-        else {
-            alert("Ha ocurrido un error desconocido, intente de nuevo mas tarde")
-        }
+        axiosExceptionHandler(error);
     }
 }
