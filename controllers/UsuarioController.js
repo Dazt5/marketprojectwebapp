@@ -100,14 +100,14 @@ const getUsuarioByCedula = async (e) => {
                     <td>${data.emailUsuario}</td>
                     <td>${data.nombreUsuario}</td>
                     <td>
-                        <a href="./ActualizarUsuario.html?id=${user.cedulaUsuario}">
+                        <a href="./ActualizarUsuario.html?id=${data.cedulaUsuario}">
                             <div class="action-buttons">  
                                 <i class="bi bi-pen-fill"></i>
                                 <p>Editar</p>
                             </div>
                         </a>
                         <div class="action-buttons" >
-                            <i class="bi bi-archive-fill" onclick="deleteUser()"></i>
+                            <i class="bi bi-archive-fill" onclick="deleteUser(${data.cedulaUsuario})"></i>
                             <p>Eliminar</p>
                         </div>
                     </td>
