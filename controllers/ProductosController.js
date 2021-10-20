@@ -88,6 +88,10 @@ const getProductoById = async (e) => {
         const token = getSessionToken();
         const { data } = await axios.get(`${BACKEND_URI}/productos/${codigoProducto}`, configureAxiosHeaders(token));
 
+        if (!data) {
+            return alert("No se encuentra un producto registrado con ese código.")
+        }
+
         productosList.innerHTML =
             getGenericTable(["Código", "Iva", "Proveedor", "Nombre del producto", "Precio de compra", "Precio de Venta", "Acciones"], PRODUCTO_ROW_ID);
 
