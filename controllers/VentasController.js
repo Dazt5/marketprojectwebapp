@@ -103,7 +103,7 @@ const getProductosById = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/productos/${codigo}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            alert("No se encuentra un producto registrado con el código indicado.")
+            return alert("No se encuentra un producto registrado con el código indicado.")
         } else {
             productosList.innerHTML =
                 getGenericTable(["Código", "Nombre del producto", "Precio", "IVA", "Agregar"], PRODUCTO_ROW_ID);
