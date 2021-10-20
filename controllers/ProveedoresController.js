@@ -83,7 +83,7 @@ const getProveedorByNIT = async (e) => {
         const { data } = await axios.get(`${BACKEND_URI}/proveedores/${nit}`, configureAxiosHeaders(token));
 
         if (data == null) {
-            alert("No se encuentra un proveedor registrado con el nit indicado.")
+            return alert("No se encuentra un proveedor registrado con el nit indicado.")
         } else {
 
             proveedoresList.innerHTML =
